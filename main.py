@@ -97,17 +97,12 @@ def callback():
                 tPath = temp + Cpath
                 temp = tPath + "/"
                 pyperclip.copy(f"{tPath}")
-                print("successfully copied to clipboard")
+                print("successfully copied to clipboard, remove the 'exit' string")
                 iNav = False
             else:
-                if os.path.exists(f"{Cpath}"):
-                    tPath = temp + Cpath
-                    print(os.listdir(tPath))
-                    temp = tPath + "/"
-                else:
-                    print("path does not exist, you may continue")
-                    tPath = temp + Cpath
-                    temp = tPath + "/"
+                tPath = temp + Cpath
+                print(os.listdir(tPath))
+                temp = tPath + "/"
 
     querySuccess = 1
 
