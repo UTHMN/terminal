@@ -8,14 +8,16 @@ import turtle
 import pyperclip
 
 global iNav
-iNav = False
+global querySuccess
+iNav: bool = False
+querySuccess: bool = False
 
 
 # def
 def callback():
     # init
     start_time = time.time()
-    querySuccess = 0
+    query_Success = False
     c = input(socket.gethostname() + "@" + getpass.getuser() + ": ")
 
     # cmds
@@ -23,7 +25,7 @@ def callback():
     # circle :O
     if c == "circle :0":
         turtle.circle(50)
-        querySuccess = 1
+        query_Success = True
         turtle.exitonclick()
         print("DO NOT REOPEN")
 
@@ -31,19 +33,19 @@ def callback():
     if c == "square :[]":
         turtle.shape("square")
         turtle.exitonclick()
-        querySuccess = 1
+        query_Success = True
         print("DO NOT REOPEN")
 
     # print command
     if c == "print":
         i = input("query: ")
         print(i)
-        querySuccess = 1
+        query_Success = True
 
     # exit terminal
     if c == "exit" or c == "quit":
         ws.PlaySound("SystemExit", ws.SND_ASYNC)
-        querySuccess = 1
+        query_Success = True
         time.sleep(2.5)
         os.system('cls' if os.name == 'nt' else 'clear')
         sys.exit()
@@ -54,7 +56,7 @@ def callback():
         print("FPS: ", round(fps, 2))
         print(f"Cpu Cores: {os.cpu_count()}")
         print(f"Operating System: {os.name}")
-        querySuccess = 1
+        query_Success = True
 
     # cmds list
     if c == "help":
@@ -67,7 +69,7 @@ def callback():
         print("PATH TOOLSET:")
         print("path --edit          Edits a given file")
         print("path --open          Opens a given file")
-        print("path --print         Prints a given file")
+        print("path --print         Prints a given file (to the printer)")
         print("path --properties    Finds properties of a file")
         print("path --find          Finds if given file exists")
         print("path --remove        Removes a file at a given path")
@@ -76,15 +78,26 @@ def callback():
         print("path --current       Displays the current path you are running")
         print("path --size          Displays the size of a path in megabytes")
         print("path --nav           Lets you navigate to a certain path and copies it to the clipboard")
-        querySuccess = 1
+        print("path --read          Prints the contents of a file (to the terminal)")
+        query_Success = True
 
     # clear terminal
 
     if c == "clear":
         os.system('cls' if os.name == 'nt' else 'clear')
-        querySuccess = 1
+        query_Success = True
 
     # path toolset
+    
+    if c == "path --read":
+        f = open(f"{input('file: ')}", 'r')
+        file_contents = f.read()
+        print("=====================")
+        print(file_contents)
+        input("press {enter} to close")
+        f.close()
+        os.system('cls' if os.name == 'nt' else 'clear')
+        query_Success = True
 
     if c == "path --nav":
         print(os.listdir("C:/"))
@@ -103,8 +116,7 @@ def callback():
                 tPath = temp + Cpath
                 print(os.listdir(tPath))
                 temp = tPath + "/"
-
-    querySuccess = 1
+        query_Success = True
 
     if c == "path --size":
         pathSize = input("Directory path to be read: ")
@@ -113,19 +125,19 @@ def callback():
             print(f'{pathSize} is {peth} gigabytes')
         else:
             print("Error: path does not exist")
-        querySuccess = 1
+        query_Success = True
 
     if c == "path --current":
         if os.path.exists(f"{os.getcwd()}"):
             print(f'Current directory: {os.getcwd()}')
         else:
             print("Error: file does not exist")
-        querySuccess = 1
+        query_Success = True
 
     if c == "path --add":
         pathAdd = input("Directory path to be created: ")
         os.makedirs(f"{pathAdd}")
-        querySuccess = 1
+        query_Success = True
 
     if c == "path --list":
         pathList = input("Directory path to be listed: ")
@@ -133,7 +145,7 @@ def callback():
             print(os.listdir(f"{pathList}"))
         else:
             print("Error: file does not exist")
-        querySuccess = 1
+        query_Success = True
 
     if c == "path --remove":
         pathRemove = input("Directory path to be removed: ")
@@ -141,7 +153,7 @@ def callback():
             os.remove(f"{pathRemove}")
         else:
             print("Error: directory does not exist")
-        querySuccess = 1
+        query_Success = True
 
     if c == "path --open":
         path = input("path: ")
@@ -149,7 +161,7 @@ def callback():
             os.startfile(f"{path}", "open")
         else:
             print("Error: file does not exist")
-        querySuccess = 1
+        query_Success = True
 
     if c == "path --print":
         path = input("path: ")
@@ -157,7 +169,7 @@ def callback():
             os.startfile(f"{path}", "print")
         else:
             print("Error: file does not exist")
-        querySuccess = 1
+        query_Success = True
 
     if c == "path --edit":
         path = input("path: ")
@@ -165,7 +177,7 @@ def callback():
             os.startfile(f"{path}", "edit")
         else:
             print("Error: path does not exist")
-        querySuccess = 1
+        query_Success = True
 
     if c == "path --properties":
         path = input("path: ")
@@ -173,16 +185,16 @@ def callback():
             os.startfile(f"{path}", "properties")
         else:
             print("Error: path does not exist")
-        querySuccess = 1
+        query_Success = True
 
     if c == "path --find":
         path = input("path: ")
         os.startfile(f"{path}", "find")
-        querySuccess = 1
+        query_Success = True
 
     # always keep at bottom | error msg
-    if querySuccess == 0 and not c == "":
-        print(f'command: {c} not found')
+    if not query_Success and not c == "":
+        print(f"command: {c} not found")
 
 
 # init
