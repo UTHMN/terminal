@@ -6,6 +6,7 @@ import os
 import winsound as ws
 import turtle
 import pyperclip
+import json
 
 global iNav
 global querySuccess
@@ -81,6 +82,31 @@ def callback():
         print("path --read          Prints the contents of a file (to the terminal)")
         query_Success = True
 
+    # settings
+
+    if c == "settings":
+        mReadWrite = input("mode: ")
+        # export mode
+        if mReadWrite == "export":
+            if os.path.exists("tSettings.json"):
+                os.remove("tSettings.json")
+            sDict = {"hi": 1, "bye": 2}
+            jsonString = json.dumps(sDict)
+            jsonFile = open("tSettings.json", "w")
+            jsonFile.write(jsonString)
+            jsonFile.close()
+        # overwrite mode
+        if mReadWrite == "remove":
+            if os.path.exists("tSettings.json"):
+                os.remove("tSettings.json")
+            else:
+                print("ERROR: NO SETTINGS TO REMOVE")
+        # raise error on invalid mode
+        if not mReadWrite == "export" and not mReadWrite == "remove":
+            print("ERROR: INVALID MODE")
+
+        query_Success = True
+
     # clear terminal
 
     if c == "clear":
@@ -88,7 +114,7 @@ def callback():
         query_Success = True
 
     # path toolset
-    
+
     if c == "path --read":
         f = open(f"{input('file: ')}", 'r')
         file_contents = f.read()
@@ -205,26 +231,30 @@ def clockSpeed(f):
         callback()
 
 
-attempts = 3
+# RE-ADD THE PASSWORD SYSTEM LATER
 
-user = False
-password = False
+# attempts = 3
 
-while attempts > 0:
-    password = input("Password: ")
-    user = input("User: ")
+# user = False
+# password = False
 
-    if password == "admin":
-        password = True
+# while attempts > 0:
+#   password = input("Password: ")
+#  user = input("User: ")
 
-    if user == "admin":
-        user = True
+#   if password == "admin":
+#      password = True
 
-    if user == True and password == True:
-        print("Logging you in...")
-        os.system('cls' if os.name == 'nt' else 'clear')
-        clockSpeed(50)
+#  if user == "admin":
+#       user = True
 
-    else:
-        attempts -= 1
-        print(f'Wrong details, {attempts} attempts left')
+#   if user == True and password == True:
+#       print("Logging you in...")
+#       os.system('cls' if os.name == 'nt' else 'clear')
+#      clockSpeed(50)
+
+#   else:
+#      attempts -= 1
+#      print(f'Wrong details, {attempts} attempts left')
+
+clockSpeed(50)  # REMOVE ONCE PASSWORD SYSTEM IS RE-ADDED
