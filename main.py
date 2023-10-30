@@ -7,6 +7,7 @@ import winsound as ws
 import turtle
 import pyperclip
 import json
+import requests
 
 global iNav
 global querySuccess
@@ -22,8 +23,36 @@ def callback():
     c = input(socket.gethostname() + "@" + getpass.getuser() + ": ")
 
     # cmds
+    # easter eggs
+
+    # SHIBE
+    if c == "shibe":
+        url = "http://shibe.online/api/shibes"
+        r = requests.get(url)
+        rContent = r.content
+        print(rContent)
+        query_Success = True
+
+    # CAT
+
+    if c == "cat":
+        url = "http://shibe.online/api/cats"
+        r = requests.get(url)
+        rContent = r.content
+        print(rContent)
+        query_Success = True
+
+    # BIRD
+
+    if c == "bird":
+        url = "http://shibe.online/api/birds"
+        r = requests.get(url)
+        rContent = r.content
+        print(rContent)
+        query_Success = True
 
     # circle :O
+
     if c == "circle :0":
         turtle.circle(50)
         query_Success = True
@@ -31,19 +60,24 @@ def callback():
         print("DO NOT REOPEN")
 
     # rectangle :[]
+
     if c == "square :[]":
         turtle.shape("square")
         turtle.exitonclick()
         query_Success = True
         print("DO NOT REOPEN")
 
+    # main cmds
+
     # print command
+
     if c == "print":
         i = input("query: ")
         print(i)
         query_Success = True
 
     # exit terminal
+
     if c == "exit" or c == "quit":
         ws.PlaySound("SystemExit", ws.SND_ASYNC)
         query_Success = True
@@ -52,6 +86,7 @@ def callback():
         sys.exit()
 
     # benchmarking tool
+
     if c == "benchmark":
         fps = (1.0 / (time.time() - start_time)) * 100
         print("FPS: ", round(fps, 2))
@@ -60,6 +95,7 @@ def callback():
         query_Success = True
 
     # cmds list
+
     if c == "help":
         print("STANDALONE COMMANDS:")
         print("help                 Displays list of commands")
@@ -90,19 +126,28 @@ def callback():
         if mReadWrite == "export":
             if os.path.exists("tSettings.json"):
                 os.remove("tSettings.json")
-            sDict = {"hi": 1, "bye": 2}
+            param1 = input("param1: ")
+            param2 = input("param2: ")
+            sDict = {param1: 1, param2: 2}
             jsonString = json.dumps(sDict)
             jsonFile = open("tSettings.json", "w")
             jsonFile.write(jsonString)
             jsonFile.close()
-        # overwrite mode
+            sys.exit()
+        # load settings
+        if mReadWrite == "load":
+            tSet = open("tSettings.json")
+            tSettings = tSet.read()
+            sString = json.dumps(tSettings)
+            print(sString)
+        # remove file
         if mReadWrite == "remove":
             if os.path.exists("tSettings.json"):
                 os.remove("tSettings.json")
             else:
                 print("ERROR: NO SETTINGS TO REMOVE")
         # raise error on invalid mode
-        if not mReadWrite == "export" and not mReadWrite == "remove":
+        if not mReadWrite == "export" and not mReadWrite == "remove" and not mReadWrite == "load":
             print("ERROR: INVALID MODE")
 
         query_Success = True
