@@ -1,0 +1,10 @@
+if statement
+===============================
+runs code if parameters are met 
+===============================
+if 1 = 2:
+    print("what?")
+else:
+    print("of course not.")
+===============================
+found in TERMINAL/src/main.py line 29:5 - 296:5

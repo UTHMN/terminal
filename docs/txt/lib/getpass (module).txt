@@ -1,0 +1,7 @@
+getpass (module)
+============================================
+Getpass is used to get the active user in c*
+============================================
+found in TERMINAL/src/main.py line: 23:48
+
+*documented in TERMINAL/docs/txt/liv/c (variable).txt

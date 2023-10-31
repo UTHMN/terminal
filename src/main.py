@@ -19,7 +19,7 @@ querySuccess: bool = False
 def callback():
     # init
     start_time = time.time()
-    query_Success = False
+    querySuccess = False
     c = input(socket.gethostname() + "@" + getpass.getuser() + ": ")
 
     # cmds
@@ -31,7 +31,7 @@ def callback():
         r = requests.get(url)
         rContent = r.content
         print(rContent)
-        query_Success = True
+        querySuccess = True
 
     # CAT
 
@@ -40,7 +40,7 @@ def callback():
         r = requests.get(url)
         rContent = r.content
         print(rContent)
-        query_Success = True
+        querySuccess = True
 
     # BIRD
 
@@ -49,13 +49,13 @@ def callback():
         r = requests.get(url)
         rContent = r.content
         print(rContent)
-        query_Success = True
+        querySuccess = True
 
     # circle :O
 
     if c == "circle :0":
         turtle.circle(50)
-        query_Success = True
+        querySuccess = True
         turtle.exitonclick()
         print("DO NOT REOPEN")
 
@@ -64,7 +64,7 @@ def callback():
     if c == "square :[]":
         turtle.shape("square")
         turtle.exitonclick()
-        query_Success = True
+        querySuccess = True
         print("DO NOT REOPEN")
 
     # main cmds
@@ -74,13 +74,13 @@ def callback():
     if c == "print":
         i = input("query: ")
         print(i)
-        query_Success = True
+        querySuccess = True
 
     # exit terminal
 
     if c == "exit" or c == "quit":
         ws.PlaySound("SystemExit", ws.SND_ASYNC)
-        query_Success = True
+        querySuccess = True
         time.sleep(2.5)
         os.system('cls' if os.name == 'nt' else 'clear')
         sys.exit()
@@ -92,7 +92,7 @@ def callback():
         print("FPS: ", round(fps, 2))
         print(f"Cpu Cores: {os.cpu_count()}")
         print(f"Operating System: {os.name}")
-        query_Success = True
+        querySuccess = True
 
     # cmds list
 
@@ -116,7 +116,7 @@ def callback():
         print("path --size          Displays the size of a path in megabytes")
         print("path --nav           Lets you navigate to a certain path and copies it to the clipboard")
         print("path --read          Prints the contents of a file (to the terminal)")
-        query_Success = True
+        querySuccess = True
 
     # settings
 
@@ -150,13 +150,13 @@ def callback():
         if not mReadWrite == "export" and not mReadWrite == "remove" and not mReadWrite == "load":
             print("ERROR: INVALID MODE")
 
-        query_Success = True
+        querySuccess = True
 
     # clear terminal
 
     if c == "clear":
         os.system('cls' if os.name == 'nt' else 'clear')
-        query_Success = True
+        querySuccess = True
 
     # path toolset
 
@@ -168,7 +168,7 @@ def callback():
         input("press {enter} to close")
         f.close()
         os.system('cls' if os.name == 'nt' else 'clear')
-        query_Success = True
+        querySuccess = True
 
     if c == "path --nav":
         print(os.listdir("C:/"))
@@ -187,7 +187,7 @@ def callback():
                 tPath = temp + Cpath
                 print(os.listdir(tPath))
                 temp = tPath + "/"
-        query_Success = True
+        querySuccess = True
 
     if c == "path --size":
         pathSize = input("Directory path to be read: ")
@@ -196,19 +196,19 @@ def callback():
             print(f'{pathSize} is {peth} gigabytes')
         else:
             print("Error: path does not exist")
-        query_Success = True
+        querySuccess = True
 
     if c == "path --current":
         if os.path.exists(f"{os.getcwd()}"):
             print(f'Current directory: {os.getcwd()}')
         else:
             print("Error: file does not exist")
-        query_Success = True
+        querySuccess = True
 
     if c == "path --add":
         pathAdd = input("Directory path to be created: ")
         os.makedirs(f"{pathAdd}")
-        query_Success = True
+        querySuccess = True
 
     if c == "path --list":
         pathList = input("Directory path to be listed: ")
@@ -216,7 +216,7 @@ def callback():
             print(os.listdir(f"{pathList}"))
         else:
             print("Error: file does not exist")
-        query_Success = True
+        querySuccess = True
 
     if c == "path --remove":
         pathRemove = input("Directory path to be removed: ")
@@ -224,7 +224,7 @@ def callback():
             os.remove(f"{pathRemove}")
         else:
             print("Error: directory does not exist")
-        query_Success = True
+        querySuccess = True
 
     if c == "path --open":
         path = input("path: ")
@@ -232,7 +232,7 @@ def callback():
             os.startfile(f"{path}", "open")
         else:
             print("Error: file does not exist")
-        query_Success = True
+        querySuccess = True
 
     if c == "path --print":
         path = input("path: ")
@@ -240,7 +240,7 @@ def callback():
             os.startfile(f"{path}", "print")
         else:
             print("Error: file does not exist")
-        query_Success = True
+        querySuccess = True
 
     if c == "path --edit":
         path = input("path: ")
@@ -248,7 +248,7 @@ def callback():
             os.startfile(f"{path}", "edit")
         else:
             print("Error: path does not exist")
-        query_Success = True
+        querySuccess = True
 
     if c == "path --properties":
         path = input("path: ")
@@ -256,15 +256,15 @@ def callback():
             os.startfile(f"{path}", "properties")
         else:
             print("Error: path does not exist")
-        query_Success = True
+        querySuccess = True
 
     if c == "path --find":
         path = input("path: ")
         os.startfile(f"{path}", "find")
-        query_Success = True
+        querySuccess = True
 
     # always keep at bottom | error msg
-    if not query_Success and not c == "":
+    if not querySuccess and not c == "":
         print(f"command: {c} not found")
 
 

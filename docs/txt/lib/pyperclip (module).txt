@@ -1,0 +1,6 @@
+pyperclip (module)
+===========================================================
+pyperclip is used to copy the final path into the clipboard.
+(path --nav script)
+===========================================================
+found in TERMINAL/src/main.py line: 183:17

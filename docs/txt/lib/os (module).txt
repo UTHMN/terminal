@@ -1,0 +1,7 @@
+os (module)
+================================================
+Used to interact with file paths, clear terminal
+and find cpu cores.
+================================================
+found in TERMINAL/src/main.py line 85:57, 93:32
+and between 161:19 - 264:28

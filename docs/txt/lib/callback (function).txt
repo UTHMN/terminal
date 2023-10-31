@@ -1,0 +1,6 @@
+callback (function)
+===========================================
+callback displays the input in the terminal
+and also runs the command the user input.
+===========================================
+TERMINAL/src/main.py line: 19:16 - 268:41

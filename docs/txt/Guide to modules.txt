@@ -1,0 +1,10 @@
+ARTICLE:   Guide to modules
+FILE-TYPE: .txt (plain text, utf-8)
+=====================================================================================
+Only import module that are being used and use fStrings when modules have parameters.
+=====================================================================================
+parameter1 = input("parameter1: ")
+parameter2 = input("parameter2: ")
+module.function(f"{parameter1}", f"{parameter2}")
+=====================================================================================
+Repeat the: f"{parameter}" for each parameter and use variables to precapture.

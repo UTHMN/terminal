@@ -1,0 +1,16 @@
+ARTICE: {article name}
+FILE-TYPE: .{file type} (extra details about file)
+======================
+{code snippet}
+
+
+
+{code snippet n}
+=============
+{descripton}
+
+{code snippet n}
+=============
+{descripton}
+
+*{anything documented in other files}

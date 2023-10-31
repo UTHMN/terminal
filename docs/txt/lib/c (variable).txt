@@ -1,0 +1,7 @@
+c (variable)
+================================================================
+c is the input the user gives to the base script. (string)
+================================================================
+c = input(socket.gethostname() + "@" + getpass.getuser() + ": ")
+================================================================
+found in TERMINAL/src/main.py line 23:5
