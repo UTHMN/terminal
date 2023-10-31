@@ -1,9 +1,0 @@
-json (module)
-=====================================================
-the json module is used to create and read json files
-it is used in the settings script to create a config
-file*
-=====================================================
-found in TERMINAL/src/main.py line: 123:5 - 153:9
-
-*work in progress

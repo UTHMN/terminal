@@ -1,5 +1,0 @@
-{name of snippet} (snippet type)
-==================================
-{documents}
-==================================
-{file path} Line: lin:col

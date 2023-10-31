@@ -1,9 +1,0 @@
-query_Success (variable)
-==============================================
-Used to check if the command exists (boolean)
-if it is not set to True, it will print: 
-command {c*} not found
-==============================================
-found in TERMINAL/src/main.py line 268:41
-==============================================
-*c is documented in TERMINAL/docs/lib/c (variable).txt

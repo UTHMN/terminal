@@ -1,7 +1,0 @@
-socket (module)
-=================================================
-Socket is used to grab the hostname of the device
-=================================================
-used in c* TERMINAL/src/main.py line: 25:69
-
-*c is documented in TERMINAL/docs/txt/lib/c (variable).txt
