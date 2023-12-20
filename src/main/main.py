@@ -127,6 +127,7 @@ def callback():
     # Youtubedownloader
         
     if c == "ytdownloader":
+        #TODO: add ability to choose to either download audio + video, audio or video
         youtubedownloader.Download()
         querySuccess = True
         
