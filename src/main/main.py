@@ -12,6 +12,7 @@ import fileviewer
 import benchmark
 import webviewer
 import fileeditor
+import youtubedownloader
 
 global iNav
 global querySuccess
@@ -122,6 +123,12 @@ def callback():
         querySuccess = True
 
     # Apps
+        
+    # Youtubedownloader
+        
+    if c == "ytdownloader":
+        youtubedownloader.Download()
+        querySuccess = True
         
     # Fileeditor
         
