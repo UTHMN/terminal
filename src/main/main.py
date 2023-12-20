@@ -3,14 +3,19 @@ import socket
 import getpass
 import sys
 import os
-import winsound as ws
 import turtle
 import pyperclip
 import json
 import requests
 
+import fileviewer
+import benchmark
+import webviewer
+import fileeditor
+
 global iNav
 global querySuccess
+global sString
 iNav: bool = False
 querySuccess: bool = False
 
@@ -18,7 +23,6 @@ querySuccess: bool = False
 # def
 def callback():
     # init
-    start_time = time.time()
     querySuccess = False
     c = input(socket.gethostname() + "@" + getpass.getuser() + ": ")
 
@@ -79,19 +83,14 @@ def callback():
     # exit terminal
 
     if c == "exit" or c == "quit":
-        ws.PlaySound("SystemExit", ws.SND_ASYNC)
         querySuccess = True
-        time.sleep(2.5)
         os.system('cls' if os.name == 'nt' else 'clear')
         sys.exit()
 
     # benchmarking tool
 
     if c == "benchmark":
-        fps = (1.0 / (time.time() - start_time)) * 100
-        print("FPS: ", round(fps, 2))
-        print(f"Cpu Cores: {os.cpu_count()}")
-        print(f"Operating System: {os.name}")
+        benchmark.init()
         querySuccess = True
 
     # cmds list
@@ -99,10 +98,14 @@ def callback():
     if c == "help":
         print("STANDALONE COMMANDS:")
         print("help                 Displays list of commands")
-        print("benchmark            Runs a benchmarking application")
         print("exit                 Exits the terminal")
         print("print                Prints the given query")
         print("Clear                Clear the terminal")
+        print("APPLICATIONS:")
+        print("fileviewer           Opens a given file in terminal and is faster than webviewer")
+        print("webviewer            Opens a given file in default webbrowser and is higher resolution than fileviewer")
+        print("benchmark            Simple benchmark in terminal, enter to retest")
+        print("fileeditor           Simple GUI file editor")
         print("PATH TOOLSET:")
         print("path --edit          Edits a given file")
         print("path --open          Opens a given file")
@@ -118,39 +121,43 @@ def callback():
         print("path --read          Prints the contents of a file (to the terminal)")
         querySuccess = True
 
-    # settings
+    # Apps
+        
+    # Fileeditor
+        
+    if c == "fileeditor":
+        fileeditor.init()
+        querySuccess = True
 
+    # Fileviewer
+
+    if c == "fileviewer":
+        fileviewer.init()
+        querySuccess = True
+
+    # Webviewer
+
+    if c == "webviewer":
+        webviewer.init()
+        querySuccess = True
+
+    # settings
+    
     if c == "settings":
-        mReadWrite = input("mode: ")
-        # export mode
-        if mReadWrite == "export":
             if os.path.exists("tSettings.json"):
                 os.remove("tSettings.json")
             param1 = input("param1: ")
             param2 = input("param2: ")
-            sDict = {param1: 1, param2: 2}
+            sDict = {"p1": param1, "p2": param2}
             jsonString = json.dumps(sDict)
             jsonFile = open("tSettings.json", "w")
             jsonFile.write(jsonString)
             jsonFile.close()
-            sys.exit()
-        # load settings
-        if mReadWrite == "load":
-            tSet = open("tSettings.json")
-            tSettings = tSet.read()
-            sString = json.dumps(tSettings)
-            print(sString)
-        # remove file
-        if mReadWrite == "remove":
-            if os.path.exists("tSettings.json"):
-                os.remove("tSettings.json")
-            else:
-                print("ERROR: NO SETTINGS TO REMOVE")
-        # raise error on invalid mode
-        if not mReadWrite == "export" and not mReadWrite == "remove" and not mReadWrite == "load":
-            print("ERROR: INVALID MODE")
-
-        querySuccess = True
+            print("Changes require a restart to take effect, restart now?")
+            tMode = input("Answer: ")
+            if tMode == "Yes" or tMode == "yes":
+                sys.exit()
+            querySuccess = True
 
     # clear terminal
 
@@ -171,8 +178,8 @@ def callback():
         querySuccess = True
 
     if c == "path --nav":
-        print(os.listdir("C:/"))
-        tPath = "C:/"
+        tPath = input("directory to start searching: ") + "/"
+        print(os.listdir(f"{tPath}"))
         temp = tPath
         iNav = True
         while iNav:
@@ -269,7 +276,15 @@ def callback():
 
 
 # init
-def clockSpeed(f):
+def __init__(f):
+    if os.path.exists("./tSettings.json"):
+        tSet = open("tSettings.json")
+        tSettings = tSet.read()
+        sString = json.dumps(tSettings)
+        print(f"Successfully Managed to import tSettings.json with data: {sString}, continuing with setup")
+    else:
+        print("Failed to get tSettings.json, continuing with setup")
+
     while True:
         hertz = 1 / f
         time.sleep(hertz)
@@ -302,4 +317,4 @@ def clockSpeed(f):
 #      attempts -= 1
 #      print(f'Wrong details, {attempts} attempts left')
 
-clockSpeed(50)  # REMOVE ONCE PASSWORD SYSTEM IS RE-ADDED
+__init__(50)  # REMOVE ONCE PASSWORD SYSTEM IS RE-ADDED
