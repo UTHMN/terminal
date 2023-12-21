@@ -134,8 +134,8 @@ def callback():
     # Fileeditor
         
     if c == "fileeditor":
-        fileeditor.init()
         querySuccess = True
+        TextEdit = fileeditor.TextEdit()
 
     # Fileviewer
 
