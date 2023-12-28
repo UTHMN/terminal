@@ -7,8 +7,8 @@ class Engine:
 
     def __init__(self) -> None:
         # dictionary, will be auto generated later
-        self.word = None
-        self.commands = None
+        self.dicts = {}
+        self.commands = {}
 
         if os.path.exists("commands.json"):
             self.temp = None
