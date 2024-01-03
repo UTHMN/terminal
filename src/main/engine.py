@@ -2,7 +2,6 @@ import json
 import os
 import fileeditor
 
-
 class Engine:
 
     def __init__(self) -> None:

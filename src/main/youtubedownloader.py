@@ -1,39 +1,58 @@
 import re
 from pytube import *
 from moviepy.editor import VideoFileClip, AudioFileClip, concatenate_videoclips
-import os
+import filemodifer
 
 def Download():
-    link = input("Enter the YouTube video URL: ")
-
-    youtubeObject = YouTube(link)
-    youtubeObject = youtubeObject.streams.get_highest_resolution()
-    video = YouTube(f"{link}")
-    vtitle = re.sub(r'[^\w]', ' ', video.title) # Removes symbols
     try:
-        stream = video.streams.filter(only_video=True).first()
-        stream.download(filename=f"{vtitle}.mp4")
-        stream = video.streams.filter(only_audio=True).first()
-        stream.download(filename=f"{vtitle}.mp3")
+        link = input("Enter the YouTube video URL: ")
+        choice = input("Audio, Video or Video + Audio: ")
 
-        title = input("Enter a title: ")
-        # Open the video and audio
-        video_clip = VideoFileClip(f"{vtitle}.mp4")
-        audio_clip = AudioFileClip(f"{vtitle}.mp3")
-        final_clip = video_clip.set_audio(audio_clip)
-        final_clip.write_videofile(title + ".mp4")
+        if choice.lower() == "video + audio":
+            youtubeObject = YouTube(link)
+            youtubeObject = youtubeObject.streams.get_highest_resolution()
+            video = YouTube(f"{link}")
+            vtitle = re.sub(r'[^\w]', ' ', video.title) # Removes symbols
 
-        mode = input("Successfully Merged audio to video, delete original files? ")
-        if mode == "Yes":
-            if os.path.exists(f"{vtitle}.mp4") and os.path.exists(f"{vtitle}.mp3"):
-                os.remove(f"{vtitle}.mp4")
-                os.remove(f"{vtitle}.mp3")
-            else:
-                print("The file does not exist") 
+            stream = video.streams.filter(only_video=True).first()
+            stream.download(filename=f"{vtitle}.mp4")
+            stream = video.streams.filter(only_audio=True).first()
+            stream.download(filename=f"{vtitle}.mp3")
+
+            title = "youtube_export"
+            # Open the video and audio
+            video_clip = VideoFileClip(f"{vtitle}.mp4")
+            audio_clip = AudioFileClip(f"{vtitle}.mp3")
+            final_clip = video_clip.set_audio(audio_clip)
+            final_clip.write_videofile(title + ".mp4")
+
+            files = [f"{vtitle}.mp4", f"{vtitle}.mp3", "youtube_exportTEMP_MPY_wvf_snd.mp3"]
+            filemodifer.removebatch(files)
+
+        elif choice.lower() == "video":
+            youtubeObject = YouTube(link)
+            youtubeObject = youtubeObject.streams.get_highest_resolution()
+            video = YouTube(f"{link}")
+            vtitle = re.sub(r'[^\w]', ' ', video.title) # Removes symbols
+
+            stream = video.streams.filter(only_video=True).first()
+            stream.download(filename=f"{vtitle}.mp4")
+
+        elif choice.lower() == "audio":
+            youtubeObject = YouTube(link)
+            youtubeObject = youtubeObject.streams.get_highest_resolution()
+            video = YouTube(f"{link}")
+            vtitle = re.sub(r'[^\w]', ' ', video.title) # Removes symbols
+
+            stream = video.streams.filter(only_audio=True).first()
+            stream.download(filename=f"{vtitle}.mp3")
+
         else:
-            pass
+            print("invalid mode")
 
-    except:
-        print("An error has occurred")
-    print("Download is completed successfully")
+        print("Download is completed successfully")
+
+    except Exception as error:
+        print(f"An error has occurred: {error}")
+
     

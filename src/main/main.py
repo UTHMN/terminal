@@ -6,7 +6,9 @@ import os
 import turtle
 import pyperclip
 import json
+import cowsay
 import requests
+from git import Repo
 
 import fileviewer
 import benchmark
@@ -20,12 +22,11 @@ global sString
 iNav: bool = False
 querySuccess: bool = False
 
-
 # def
 def callback():
     # init
     querySuccess = False
-    c = input(socket.gethostname() + "@" + getpass.getuser() + ": ")
+    c = input(getpass.getuser() + "@" + socket.gethostname() + ": ")
 
     # cmds
     # easter eggs
@@ -40,7 +41,7 @@ def callback():
 
     # CAT
 
-    if c == "cat":
+    elif c == "cat":
         url = "http://shibe.online/api/cats"
         r = requests.get(url)
         rContent = r.content
@@ -49,7 +50,7 @@ def callback():
 
     # BIRD
 
-    if c == "bird":
+    elif c == "bird":
         url = "http://shibe.online/api/birds"
         r = requests.get(url)
         rContent = r.content
@@ -58,7 +59,7 @@ def callback():
 
     # circle :O
 
-    if c == "circle :0":
+    elif c == "circle :0":
         turtle.circle(50)
         querySuccess = True
         turtle.exitonclick()
@@ -66,7 +67,7 @@ def callback():
 
     # rectangle :[]
 
-    if c == "square :[]":
+    elif c == "square :[]":
         turtle.shape("square")
         turtle.exitonclick()
         querySuccess = True
@@ -76,37 +77,40 @@ def callback():
 
     # print command
 
-    if c == "print":
+    elif c == "print":
         i = input("query: ")
         print(i)
         querySuccess = True
 
     # exit terminal
 
-    if c == "exit" or c == "quit":
+    elif c == "exit" or c == "quit":
         querySuccess = True
         os.system('cls' if os.name == 'nt' else 'clear')
         sys.exit()
 
     # benchmarking tool
 
-    if c == "benchmark":
+    elif c == "benchmark":
         benchmark.init()
         querySuccess = True
 
     # cmds list
 
-    if c == "help":
+    elif c == "help":
         print("STANDALONE COMMANDS:")
         print("help                 Displays list of commands")
         print("exit                 Exits the terminal")
         print("print                Prints the given query")
         print("Clear                Clear the terminal")
+        print("GIT TOOLSET:")
+        print("git --init           Initialize a git repository")
         print("APPLICATIONS:")
         print("fileviewer           Opens a given file in terminal and is faster than webviewer")
         print("webviewer            Opens a given file in default webbrowser and is higher resolution than fileviewer")
         print("benchmark            Simple benchmark in terminal, enter to retest")
         print("fileeditor           Simple GUI file editor")
+        print("ytdownoader          Youtube video downloader")
         print("PATH TOOLSET:")
         print("path --edit          Edits a given file")
         print("path --open          Opens a given file")
@@ -120,38 +124,39 @@ def callback():
         print("path --size          Displays the size of a path in megabytes")
         print("path --nav           Lets you navigate to a certain path and copies it to the clipboard")
         print("path --read          Prints the contents of a file (to the terminal)")
+        print("git --clone          Clones given repository into given path")
         querySuccess = True
 
     # Apps
         
     # Youtubedownloader
         
-    if c == "ytdownloader":
+    elif c == "ytdownloader":
         #TODO: add ability to choose to either download audio + video, audio or video
         youtubedownloader.Download()
         querySuccess = True
         
     # Fileeditor
         
-    if c == "fileeditor":
+    elif c == "fileeditor":
         querySuccess = True
         TextEdit = fileeditor.TextEdit()
 
     # Fileviewer
 
-    if c == "fileviewer":
+    elif c == "fileviewer":
         fileviewer.init()
         querySuccess = True
 
     # Webviewer
 
-    if c == "webviewer":
+    elif c == "webviewer":
         webviewer.init()
         querySuccess = True
 
     # settings
     
-    if c == "settings":
+    elif c == "settings":
             if os.path.exists("tSettings.json"):
                 os.remove("tSettings.json")
             param1 = input("param1: ")
@@ -169,13 +174,46 @@ def callback():
 
     # clear terminal
 
-    if c == "clear":
+    elif c == "clear":
         os.system('cls' if os.name == 'nt' else 'clear')
+        querySuccess = True
+
+    # git toolset
+        
+    elif c == "git --init":
+        mode = input("New Repo or Existing Repo: ")
+        if mode == "New Repo":
+            path_to_dir = input("path to dir: ")
+            repo = Repo.init(f"{path_to_dir}")
+        elif mode == "Existing Repo":
+            path_to_dir = input("path to dir: ")
+            repo = Repo(path_to_dir)
+
+    elif c == "git --clone":
+        try:
+            repo_url = input("link to repo: ")
+            path_to_dir = input("where to clone: ")
+
+            if path_to_dir.endswith("/"):
+                repo_name = input("Name of repository: ")
+                new_path = path_to_dir + (f"{repo_name}")
+                os.makedirs(f"{new_path}")
+            elif not path_to_dir.endswith("/"):
+                repo_name = input("Name of repository: ")
+                new_path = path_to_dir + (f"/{repo_name}")
+                os.makedirs(f"{new_path}")
+
+            repo = Repo.clone_from(repo_url, new_path)
+            print("Success!")
+
+        except Exception as error:
+            print(f"error: {error}")
+
         querySuccess = True
 
     # path toolset
 
-    if c == "path --read":
+    elif c == "path --read":
         f = open(f"{input('file: ')}", 'r')
         file_contents = f.read()
         print("=====================")
@@ -185,7 +223,7 @@ def callback():
         os.system('cls' if os.name == 'nt' else 'clear')
         querySuccess = True
 
-    if c == "path --nav":
+    elif c == "path --nav":
         tPath = input("directory to start searching: ") + "/"
         print(os.listdir(f"{tPath}"))
         temp = tPath
@@ -204,7 +242,7 @@ def callback():
                 temp = tPath + "/"
         querySuccess = True
 
-    if c == "path --size":
+    elif c == "path --size":
         pathSize = input("Directory path to be read: ")
         if os.path.exists(f"{pathSize}"):
             peth = os.path.getsize(f'{pathSize}') / 100
@@ -213,19 +251,19 @@ def callback():
             print("Error: path does not exist")
         querySuccess = True
 
-    if c == "path --current":
+    elif c == "path --current":
         if os.path.exists(f"{os.getcwd()}"):
             print(f'Current directory: {os.getcwd()}')
         else:
             print("Error: file does not exist")
         querySuccess = True
 
-    if c == "path --add":
+    elif c == "path --add":
         pathAdd = input("Directory path to be created: ")
         os.makedirs(f"{pathAdd}")
         querySuccess = True
 
-    if c == "path --list":
+    elif c == "path --list":
         pathList = input("Directory path to be listed: ")
         if os.path.exists(f"{pathList}"):
             print(os.listdir(f"{pathList}"))
@@ -233,7 +271,7 @@ def callback():
             print("Error: file does not exist")
         querySuccess = True
 
-    if c == "path --remove":
+    elif c == "path --remove":
         pathRemove = input("Directory path to be removed: ")
         if os.path.exists(f"{pathRemove}"):
             os.remove(f"{pathRemove}")
@@ -241,7 +279,7 @@ def callback():
             print("Error: directory does not exist")
         querySuccess = True
 
-    if c == "path --open":
+    elif c == "path --open":
         path = input("path: ")
         if os.path.exists(f"{path}"):
             os.startfile(f"{path}", "open")
@@ -249,7 +287,7 @@ def callback():
             print("Error: file does not exist")
         querySuccess = True
 
-    if c == "path --print":
+    elif c == "path --print":
         path = input("path: ")
         if os.path.exists(f"{path}"):
             os.startfile(f"{path}", "print")
@@ -257,7 +295,7 @@ def callback():
             print("Error: file does not exist")
         querySuccess = True
 
-    if c == "path --edit":
+    elif c == "path --edit":
         path = input("path: ")
         if os.path.exists(f"{path}"):
             os.startfile(f"{path}", "edit")
@@ -265,7 +303,7 @@ def callback():
             print("Error: path does not exist")
         querySuccess = True
 
-    if c == "path --properties":
+    elif c == "path --properties":
         path = input("path: ")
         if os.path.exists(f"{path}"):
             os.startfile(f"{path}", "properties")
@@ -273,7 +311,7 @@ def callback():
             print("Error: path does not exist")
         querySuccess = True
 
-    if c == "path --find":
+    elif c == "path --find":
         path = input("path: ")
         os.startfile(f"{path}", "find")
         querySuccess = True
