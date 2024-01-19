@@ -1,5 +1,0 @@
-#4
-
-repeat 16 var i:
-    terminal.log(i)
-end
