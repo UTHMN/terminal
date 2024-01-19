@@ -19,7 +19,6 @@ class Engine:
 
         for i in range(len(files)):
             file_path = "./PyMrk/Snippets/" + files[i]
-            self.commands()
         
             with open(file_path, 'r') as file:
                 file_content = file.read()
